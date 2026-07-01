@@ -233,6 +233,32 @@ When an {{Element}} with a [^containertiming^] content attribute is connected to
 2. The user agent must initialize an empty [=painted region=] for the [=container root=].
 3. The user agent must track all paint operations within the [=container root=]'s subtree, excluding any [=ignored subtrees=].
 
+Removing the containertiming attribute {#removing-containertiming}
+------------------------------------------------------
+
+<div algorithm="remove containertiming attribute">
+When the [^containertiming^] content attribute is removed from an {{Element}} |element|, perform the following steps:
+
+1. Let |document| be |element|'s [=Node/node document=].
+2. If |document|'s [=container root records map=] contains an entry for |element|, remove that entry.
+
+</div>
+
+Note: If the [^containertiming^] attribute is later re-added to the same element, a new [=Container Timing Record=] will be created on the next paint. The [=painted region=] starts fresh — prior paint data is not preserved.
+
+Disconnecting a container root {#disconnecting-container-root}
+------------------------------------------------------
+
+<div algorithm="disconnect container root">
+When a [=container root=] {{Element}} |element| is disconnected from the document, perform the following steps:
+
+1. Let |document| be |element|'s [=Node/node document=].
+2. If |document|'s [=container root records map=] contains an entry for |element|, remove that entry.
+
+</div>
+
+Note: If the element is reconnected to the document while still having the [^containertiming^] attribute, it is treated as a new [=container root=] registration. A new [=Container Timing Record=] will be created on the next paint with a fresh [=painted region=].
+
 Handle Element Painted for Container Timing {#handle-element-painted}
 ----------------------------------------------------------------------
 
