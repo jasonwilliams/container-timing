@@ -110,7 +110,7 @@ A <dfn export>container root</dfn> is an {{Element}} that has the {{containertim
 
 An <dfn export>ignored subtree</dfn> is a subtree rooted at an {{Element}} with the {{containertimingignore}}> attribute.
 
-A <dfn export>painted region</dfn> is a region (collection of rectangles) representing all the painted portions of a [=container root=] accumulated since it was first observed.
+A <dfn export>painted region</dfn> is a region (collection of rectangles) representing all the painted portions of a [=container root=] accumulated since it was first observed. The painted region is maintained in the viewport coordinate space. If the [=container root=] element moves (e.g. due to layout changes or {{moveBefore()}}), previously accumulated rectangles are not adjusted — the region continues to expand in viewport coordinates.
 
 The <dfn export>container timing API</dfn> provides timing information about when container roots are painted to the screen.
 
