@@ -197,7 +197,7 @@ partial interface Element {
 <div dfn-for="Element">
 The <dfn attribute>containertiming</dfn> attribute is a {{DOMString}} that identifies the element as a [=container root=]. The value becomes the {{PerformanceContainerTiming/identifier}} in the corresponding {{PerformanceContainerTiming}} entry.
 
-The <dfn attribute lt="containertimingIgnore|containertimingignore">containertimingIgnore</dfn> attribute, when present, marks the element and its descendants as an [=ignored subtree=] that should not contribute to container timing measurements for ancestor [=container roots=].
+The {{Element/containertimingIgnore}} attribute, when present, marks the element and its descendants as an [=ignored subtree=] that should not contribute to container timing measurements for ancestor [=container roots=].
 </div>
 
 Container Timing Record {#container-timing-record}
