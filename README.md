@@ -286,3 +286,4 @@ Many thanks for valuable feedback and advice from:
 - [Michael Mocny](https://github.com/mmocny)
 - [Scott Haseley](https://github.com/shaseley)
 - [Sergey Chernyshev](https://github.com/sergeychernyshev)
+- [Bas Schouten](https://hacks.mozilla.org/author/bschoutenmozilla-com)
