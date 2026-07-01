@@ -42,13 +42,13 @@ Mark a container element with the `containertiming` attribute and observe perfor
 
 ### Ignoring Parts of the Container
 
-Use the `containertiming-ignore` attribute to exclude specific subtrees from tracking:
+Use the `containertimingignore` attribute to exclude specific subtrees from tracking:
 
 ```html
 <div containertiming="main-content">
   <main>...</main>
   <!-- This aside and its children will be ignored -->
-  <aside containertiming-ignore>...</aside>
+  <aside containertimingignore>...</aside>
 </div>
 ```
 
@@ -114,7 +114,7 @@ To test the Container Timing API locally in Chrome:
 1. **Set attributes early**: Add the `containertiming` attribute before the element is added to the document for complete tracking
 2. **Use meaningful identifiers**: Choose descriptive names for the `containertiming` attribute to make analytics easier
 3. **Strategic placement**: Apply `containertiming` to semantic sections that matter for your metrics (e.g., "hero-section", "product-grid", "checkout-form")
-4. **Ignore irrelevant content**: Use `containertiming-ignore` on ads, analytics scripts, or decorative elements that shouldn't affect your component metrics
+4. **Ignore irrelevant content**: Use `containertimingignore` on ads, analytics scripts, or decorative elements that shouldn't affect your component metrics
 
 ## Known Limitations
 
