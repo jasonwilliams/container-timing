@@ -212,6 +212,7 @@ A <dfn export>Container Timing Record</dfn> has these associated concepts:
 * A <dfn>paintedRegion</dfn> which is a [=painted region=], initially empty.
 * A <dfn>lastNewPaintedAreaPaintTimingInfo</dfn> which is a [=PaintTimingMixin/paint timing info=], initially unset.
 * A <dfn>lastNewPaintedAreaElement</dfn> which is an {{Element}} or null, initially null.
+* A <dfn>lastNewPaintedAreaSize</dfn> which is a number, initially 0.
 * A <dfn>hasPendingChanges</dfn> which is a boolean, initially false.
     </div>
 
@@ -287,6 +288,8 @@ When asked to emit container timing entries for a {{Document}} |document|, perfo
     1. If |record|'s [=Container Timing Record/hasPendingChanges=] is false, continue.
     2. <a>Create a Container Timing entry</a> given |record| and |containerRoot|.
     3. Set |record|'s [=Container Timing Record/hasPendingChanges=] to false.
+    4. Set |record|'s [=Container Timing Record/lastNewPaintedAreaElement=] to null.
+    5. Set |record|'s [=Container Timing Record/lastNewPaintedAreaSize=] to 0.
 3. Mark the {{Document}} as no longer having pending container timing changes.
         </div>
 
@@ -344,16 +347,21 @@ To <dfn>maybe update the last new painted area</dfn> for a [=Container Timing Re
 
 1. Let |paintedRegion| be |record|'s [=Container Timing Record/paintedRegion=].
 2. If |paintedRegion| fully contains |enclosingRect|, return.
-3. Set |record|'s [=Container Timing Record/paintedRegion=] to the union of |paintedRegion| and |enclosingRect|.
-4. Set |record|'s [=Container Timing Record/lastNewPaintedAreaPaintTimingInfo=] to |paintTimingInfo|.
-5. Set |record|'s [=Container Timing Record/lastNewPaintedAreaElement=] to |element|.
-6. Set |record|'s [=Container Timing Record/hasPendingChanges=] to true.
-7. If |containerRoot|'s [^containertimingignore^] content attribute is present, return.
-8. Let |parentContainerRoot| be the result of <a>get the parent container root element</a> given |containerRoot|.
-9. If |parentContainerRoot| is null, return.
-10. Let |parentRecord| be the entry in |document|'s <a>container root records map</a> for |parentContainerRoot|. If no such entry exists, set |parentRecord| to the result of <a>create a Container Timing Record</a> given |paintTimingInfo| and the value of |parentContainerRoot|'s [^containertiming^] content attribute; then add (|parentContainerRoot| → |parentRecord|) to |document|'s <a>container root records map</a>.
-11. <a>Maybe update the last new painted area</a> for |parentRecord| given |document|, |parentContainerRoot|, |element|, |enclosingRect|, and |paintTimingInfo|.
+3. Let |newPaintedArea| be the area of |enclosingRect| that is not already contained in |paintedRegion|.
+4. Set |record|'s [=Container Timing Record/paintedRegion=] to the union of |paintedRegion| and |enclosingRect|.
+5. Set |record|'s [=Container Timing Record/lastNewPaintedAreaPaintTimingInfo=] to |paintTimingInfo|.
+6. If |newPaintedArea| is greater than |record|'s [=Container Timing Record/lastNewPaintedAreaSize=]:
+    1. Set |record|'s [=Container Timing Record/lastNewPaintedAreaElement=] to |element|.
+    2. Set |record|'s [=Container Timing Record/lastNewPaintedAreaSize=] to |newPaintedArea|.
+7. Set |record|'s [=Container Timing Record/hasPendingChanges=] to true.
+8. If |containerRoot|'s [^containertimingignore^] content attribute is present, return.
+9. Let |parentContainerRoot| be the result of <a>get the parent container root element</a> given |containerRoot|.
+10. If |parentContainerRoot| is null, return.
+11. Let |parentRecord| be the entry in |document|'s <a>container root records map</a> for |parentContainerRoot|. If no such entry exists, set |parentRecord| to the result of <a>create a Container Timing Record</a> given |paintTimingInfo| and the value of |parentContainerRoot|'s [^containertiming^] content attribute; then add (|parentContainerRoot| → |parentRecord|) to |document|'s <a>container root records map</a>.
+12. <a>Maybe update the last new painted area</a> for |parentRecord| given |document|, |parentContainerRoot|, |element|, |enclosingRect|, and |paintTimingInfo|.
     </div>
+
+Note: The {{PerformanceContainerTiming/lastPaintedElement}} is the element that contributed the largest newly painted area within a single rendering frame. This avoids dependence on implementation-specific paint ordering and follows a similar approach to the Largest Contentful Paint algorithm. The [=Container Timing Record/lastNewPaintedAreaSize=] is reset after entries are emitted so that each frame's comparison starts fresh.
 
 Note: This algorithm reports any change to the painted region, regardless of size. Even a 1 pixel change in the painted area will result in a new {{PerformanceContainerTiming}} entry being queued. Developers who wish to filter out small changes may do so by comparing the {{PerformanceContainerTiming/size}} values between entries.
 
