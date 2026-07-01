@@ -116,13 +116,13 @@ We now describe precisely what information is exposed via the WebPerf API. The P
 
 ### Ignoring parts of the DOM
 
-If you want wish to ignore parts of the DOM tree you are monitoring, you can add the `containertiming-ignore` attribute to the element you want to ignore (plus its children).
+If you want wish to ignore parts of the DOM tree you are monitoring, you can add the `containertimingignore` attribute to the element you want to ignore (plus its children).
 
 ```html
 <div … containertiming="foobar">
   <main>...</main>
   <!-- We don't want to track paint udpates in the aside -->
-  <aside containertiming-ignore>...</aside>
+  <aside containertimingignore>...</aside>
 </div>
 ```
 

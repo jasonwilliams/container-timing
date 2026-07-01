@@ -92,13 +92,13 @@ Ignoring Subtrees {#ignoring-subtrees}
 ---------------------------------------
 
 <div class="example">
-Parts of the DOM tree can be ignored using the <{{containertiming-ignore}}> attribute:
+Parts of the DOM tree can be ignored using the <{{containertimingignore}}> attribute:
 
 ```html
 <div containertiming="foobar">
   <main>...</main>
   <!-- Aside updates won't trigger container timing events -->
-  <aside containertiming-ignore>...</aside>
+  <aside containertimingignore>...</aside>
 </div>
 ```
 </div>
@@ -108,7 +108,7 @@ Terminology {#terminology}
 
 A <dfn export>container root</dfn> is an {{Element}} that has the {{containertiming}} attribute.
 
-An <dfn export>ignored subtree</dfn> is a subtree rooted at an {{Element}} with the {{containertiming-ignore}}> attribute.
+An <dfn export>ignored subtree</dfn> is a subtree rooted at an {{Element}} with the {{containertimingignore}}> attribute.
 
 A <dfn export>painted region</dfn> is a region (collection of rectangles) representing all the painted portions of a [=container root=] accumulated since it was first observed.
 
@@ -197,7 +197,7 @@ partial interface Element {
 <div dfn-for="Element">
 The <dfn attribute>containertiming</dfn> attribute is a {{DOMString}} that identifies the element as a [=container root=]. The value becomes the {{PerformanceContainerTiming/identifier}} in the corresponding {{PerformanceContainerTiming}} entry.
 
-The <dfn attribute>containertiming-ignore</dfn> attribute, when present, marks the element and its descendants as an [=ignored subtree=] that should not contribute to container timing measurements for ancestor [=container roots=].
+The <dfn attribute>containertimingignore</dfn> attribute, when present, marks the element and its descendants as an [=ignored subtree=] that should not contribute to container timing measurements for ancestor [=container roots=].
 </div>
 
 Container Timing Record {#container-timing-record}
@@ -348,7 +348,7 @@ To <dfn>maybe update the last new painted area</dfn> for a [=Container Timing Re
 4. Set |record|'s [=Container Timing Record/lastNewPaintedAreaPaintTimingInfo=] to |paintTimingInfo|.
 5. Set |record|'s [=Container Timing Record/lastNewPaintedAreaElement=] to |element|.
 6. Set |record|'s [=Container Timing Record/hasPendingChanges=] to true.
-7. If |containerRoot|'s [^containertiming-ignore^] content attribute is present, return.
+7. If |containerRoot|'s [^containertimingignore^] content attribute is present, return.
 8. Let |parentContainerRoot| be the result of <a>get the parent container root element</a> given |containerRoot|.
 9. If |parentContainerRoot| is null, return.
 10. Let |parentRecord| be the entry in |document|'s <a>container root records map</a> for |parentContainerRoot|. If no such entry exists, set |parentRecord| to the result of <a>create a Container Timing Record</a> given |paintTimingInfo| and the value of |parentContainerRoot|'s [^containertiming^] content attribute; then add (|parentContainerRoot| → |parentRecord|) to |document|'s <a>container root records map</a>.
