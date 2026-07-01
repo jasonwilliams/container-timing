@@ -1,5 +1,2 @@
 node_modules
-polyfill.js
-polyfill.js.map
-demo-overlays.js
-demo-overlays.js.map
+index.html
