@@ -197,7 +197,7 @@ partial interface Element {
 <div dfn-for="Element">
 The <dfn attribute>containertiming</dfn> attribute is a {{DOMString}} that identifies the element as a [=container root=]. The value becomes the {{PerformanceContainerTiming/identifier}} in the corresponding {{PerformanceContainerTiming}} entry.
 
-The {{Element/containertimingIgnore}} attribute, when present, marks the element and its descendants as an [=ignored subtree=] that should not contribute to container timing measurements for ancestor [=container roots=].
+The <dfn attribute lt="containertimingIgnore|containertimingignore">containertimingIgnore</dfn> attribute, when present, marks the element and its descendants as an [=ignored subtree=] that should not contribute to container timing measurements for ancestor [=container roots=].
 </div>
 
 Container Timing Record {#container-timing-record}
@@ -361,7 +361,7 @@ To <dfn>maybe update the last new painted area</dfn> for a [=Container Timing Re
 12. <a>Maybe update the last new painted area</a> for |parentRecord| given |document|, |parentContainerRoot|, |element|, |enclosingRect|, and |paintTimingInfo|.
     </div>
 
-Note: The {{PerformanceContainerTiming/lastPaintedElement}} is the element that contributed the largest newly painted area within a single rendering frame. This avoids dependence on implementation-specific paint ordering and follows a similar approach to the Largest Contentful Paint algorithm. The [=Container Timing Record/lastNewPaintedAreaSize=] is reset after entries are emitted so that each frame's comparison starts fresh.
+Note: The {{PerformanceContainerTiming/lastPaintedElement}} is the element that contributed the largest newly painted area within a single rendering frame. This avoids dependence on implementation-specific paint ordering. {{PerformanceContainerTiming/lastPaintedElement}} is intended as a debugging aid for developers investigating what is driving updates on a large or complex [=container root=] (e.g. a table), rather than a standalone performance metric in its own right. The [=Container Timing Record/lastNewPaintedAreaSize=] is reset after entries are emitted so that each frame's comparison starts fresh.
 
 Note: This algorithm reports any change to the painted region, regardless of size. Even a 1 pixel change in the painted area will result in a new {{PerformanceContainerTiming}} entry being queued. Developers who wish to filter out small changes may do so by comparing the {{PerformanceContainerTiming/size}} values between entries.
 
