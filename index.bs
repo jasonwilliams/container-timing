@@ -30,7 +30,7 @@ urlPrefix: https://w3c.github.io/IntersectionObserver/; spec: INTERSECTION-OBSER
 Introduction {#intro}
 =====================
 
-The Container Timing API enables monitoring when annotated sections of the DOM are displayed on screen and have finished their initial paint. A developer can mark subsections of the DOM with the {{containertiming}} attribute (similar to <code>elementtiming</code> for the Element Timing API) and receive performance entries when that section has been painted for the first time.
+The Container Timing API enables monitoring when annotated sections of the DOM are displayed on screen and have finished their initial paint. A developer can mark subsections of the DOM with the [^containertiming^] attribute (similar to <code>elementtiming</code> for the Element Timing API) and receive performance entries when that section has been painted for the first time.
 
 This API allows developers to measure the timing of various components in their pages. As developers increasingly organize their applications into components, there's a growing demand to measure performance on subsections of an application or a web page.
 
@@ -64,7 +64,7 @@ Usage Example {#example-usage}
 The following example demonstrates how to register a container root and observe its paint timings.
 
 <div class="example">
-Registration is on a per-element basis using the {{containertiming}} attribute:
+Registration is on a per-element basis using the [^containertiming^] attribute:
 
 ```html
 <div containertiming="foobar">
@@ -92,7 +92,7 @@ Ignoring Subtrees {#ignoring-subtrees}
 ---------------------------------------
 
 <div class="example">
-Parts of the DOM tree can be ignored using the <{{containertimingignore}}> attribute:
+Parts of the DOM tree can be ignored using the [^containertimingignore^] attribute:
 
 ```html
 <div containertiming="foobar">
@@ -106,9 +106,9 @@ Parts of the DOM tree can be ignored using the <{{containertimingignore}}> attri
 Terminology {#terminology}
 ===========================
 
-A <dfn export>container root</dfn> is an {{Element}} that has the {{containertiming}} attribute.
+A <dfn export>container root</dfn> is an {{Element}} that has the [^containertiming^] attribute.
 
-An <dfn export>ignored subtree</dfn> is a subtree rooted at an {{Element}} with the {{containertimingignore}}> attribute.
+An <dfn export>ignored subtree</dfn> is a subtree rooted at an {{Element}} with the [^containertimingignore^] attribute.
 
 A <dfn export>painted region</dfn> is a region (collection of rectangles) representing all the painted portions of a [=container root=] accumulated since it was first observed. The painted region is maintained in the viewport coordinate space. If the [=container root=] element moves (e.g. due to layout changes or {{moveBefore()}}), previously accumulated rectangles are not adjusted — the region continues to expand in viewport coordinates.
 
@@ -189,15 +189,15 @@ We extend the {{Element}} interface as follows:
 
 <pre class="idl">
 partial interface Element {
-    [CEReactions] attribute DOMString containertiming;
-    [CEReactions] attribute DOMString? containertimingIgnore;
+    [CEReactions, Reflect] attribute DOMString containerTiming;
+    [CEReactions, Reflect] attribute boolean containerTimingIgnore;
 };
 </pre>
 
 <div dfn-for="Element">
-The <dfn attribute>containertiming</dfn> attribute is a {{DOMString}} that identifies the element as a [=container root=]. The value becomes the {{PerformanceContainerTiming/identifier}} in the corresponding {{PerformanceContainerTiming}} entry.
+The <dfn attribute lt="containerTiming|containertiming">containerTiming</dfn> attribute is a {{DOMString}} that identifies the element as a [=container root=]. The value becomes the {{PerformanceContainerTiming/identifier}} in the corresponding {{PerformanceContainerTiming}} entry.
 
-The <dfn attribute lt="containertimingIgnore|containertimingignore">containertimingIgnore</dfn> attribute, when present, marks the element and its descendants as an [=ignored subtree=] that should not contribute to container timing measurements for ancestor [=container roots=].
+The <dfn attribute lt="containerTimingIgnore|containertimingignore">containerTimingIgnore</dfn> attribute, when present, marks the element and its descendants as an [=ignored subtree=] that should not contribute to container timing measurements for ancestor [=container roots=].
 </div>
 
 Container Timing Record {#container-timing-record}
