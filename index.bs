@@ -110,7 +110,7 @@ A <dfn export>container root</dfn> is an {{Element}} that has the [^containertim
 
 An <dfn export>ignored subtree</dfn> is a subtree rooted at an {{Element}} with the [^containertimingignore^] attribute.
 
-A <dfn export>painted region</dfn> is a region (collection of rectangles) representing all the painted portions of a [=container root=] accumulated since it was first observed. The painted region is maintained in the viewport coordinate space. If the [=container root=] element moves (e.g. due to layout changes or {{moveBefore()}}), previously accumulated rectangles are not adjusted — the region continues to expand in viewport coordinates.
+A <dfn export>painted region</dfn> is a region (collection of rectangles) representing all the painted portions of a [=container root=] accumulated since it was first observed, expressed in CSS pixels. The painted region is maintained in the viewport coordinate space. If the [=container root=] element moves (e.g. due to layout changes or {{moveBefore()}}), previously accumulated rectangles are not adjusted — the region continues to expand in viewport coordinates.
 
 The <dfn export>container timing API</dfn> provides timing information about when container roots are painted to the screen.
 
@@ -131,6 +131,8 @@ interface PerformanceContainerTiming : PerformanceEntry {
 
 PerformanceContainerTiming includes PaintTimingMixin;
 </pre>
+
+Note: {{PerformanceContainerTiming/intersectionRect}}'s coordinates and {{PerformanceContainerTiming/size}} are expressed in CSS pixels (square CSS pixels for {{PerformanceContainerTiming/size}}), consistent with the [=painted region=]'s coordinate space and with the units produced by the <a>intersection rect algorithm</a>.
 
 <div dfn-for="PerformanceContainerTiming">
 Each {{PerformanceContainerTiming}} object has these associated concepts:
@@ -379,7 +381,7 @@ In order to <dfn>create a Container Timing entry</dfn> given a [=Container Timin
     * {{PerformanceContainerTiming/identifier}} set to |record|'s [=Container Timing Record/identifier=]
     * {{PerformanceContainerTiming/firstRenderTime}} set to |record|'s [=Container Timing Record/paintTimingInfo=]'s {{PaintTimingMixin/paintTime}}
     * {{PerformanceContainerTiming/intersectionRect}} set to the bounding rectangle of |record|'s [=Container Timing Record/paintedRegion=]
-    * {{PerformanceContainerTiming/size}} set to the total area of |record|'s [=Container Timing Record/paintedRegion=]
+    * {{PerformanceContainerTiming/size}} set to the total area, in square CSS pixels, of |record|'s [=Container Timing Record/paintedRegion=]
     * {{PerformanceContainerTiming/lastPaintedElement}} set to |record|'s [=Container Timing Record/lastNewPaintedAreaElement=]
     * {{PerformanceContainerTiming/rootElement}} set to |containerRoot|
 2. <a>Queue the PerformanceEntry</a> |entry|.
