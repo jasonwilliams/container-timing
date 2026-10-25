@@ -29,6 +29,7 @@ _Note: This API plans to go to [Origin Trial](./ORIGIN_TRIAL.md) during Chrome m
 1. [How do we try this?](#how-do-we-try-this-out)
    1. [Chrome Origin Trial](#chrome-origin-trial)
    1. [Browser Extension](#browser-extension)
+1. [Performance](#performance)
 1. [Considered alternatives](#considered-alternatives)
 1. [Questions](#questions)
 1. [W3C Specification Meetings](#w3c-specification-meetings)
@@ -201,6 +202,10 @@ Once you have the browser running with Container Timing enabled, you can run:
 - `$ npm run start`
 
 in the root of this repo and it should load up the examples for you to try out.
+
+## Performance
+
+[`perf/`](./perf/README.md) has a benchmark that measures what Container Timing costs a browser, on a stress page with a 35,000-element container. It runs in Chrome, Firefox and Servo and compares each browser with the feature on and off, at page load and while the container keeps gaining new content.
 
 ## Considered alternatives
 

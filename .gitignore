@@ -5,3 +5,4 @@ demo-overlays.js
 demo-overlays.js.map
 public
 index.html
+.zed/debug.json
